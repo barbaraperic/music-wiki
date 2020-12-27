@@ -1,56 +1,83 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import { makeStyles } from '@material-ui/core/styles';
-import guitarImg from '../images/guitar.jpg'
-import saxophoneImg from '../images/saxophone.jpg'
-import acousticImg from '../images/acoustic.jpg'
-import arrow from '../images/arrow.svg'
+import { Credentials } from './Credentials'
+import Dropdown from './Dropdown'
 
 const Gallery = () => {
+  const [token, setToken] = useState('')
+  const [genres, setGenres] = useState({selectedGenre: '', listOfGenresFromAPI: []});
+  const [playlist, setPlaylist] = useState({selectedPlaylist: '', listOfPlaylistFromAPI: []});
+  const [tracks, setTracks] = useState({selectedTrack: '', listOfTracksFromAPI: []});
+
   const classes = useStyles()
 
-  const images = [guitarImg, saxophoneImg, acousticImg]
+  const spotify = Credentials()
 
-  // axios.get('/login').then(res => console.log('>>', res))
+  useEffect(() => {
+
+    axios('https://accounts.spotify.com/api/token', {
+      headers: {
+        'Content-Type' : 'application/x-www-form-urlencoded',
+        'Authorization' : 'Basic ' + btoa(spotify.ClientId + ':' + spotify.ClientSecret)      
+      },
+      data: 'grant_type=client_credentials',
+      method: 'POST'
+    })
+    .then(tokenResponse => {      
+      setToken(tokenResponse.data.access_token);
+
+      axios('https://api.spotify.com/v1/browse/categories?locale=sv_US', {
+        method: 'GET',
+        headers: { 'Authorization' : 'Bearer ' + tokenResponse.data.access_token}
+      })
+      .then (genreResponse => {   
+        console.log('genre', genreResponse)     
+        setGenres({
+          selectedGenre: genres.selectedGenre,
+          listOfGenresFromAPI: genreResponse.data.categories.items
+        })
+      });
+      
+    });
+
+  }, [genres.selectedGenre, spotify.ClientId, spotify.ClientSecret]); 
+
+  const genreChanged = val => {
+    setGenres({
+      selectedGenre: val,
+      listOfGenresFromAPI: genres.listOfGenresFromAPI
+    })
+    
+    axios(`https://api.spotify.com/v1/browse/categories/${val}/playlists?limit=10`, {
+      method: 'GET',
+      headers: { 'Authorization' : 'Bearer ' + token}
+    })
+    .then(playlistResponse => {
+      setPlaylist({
+        selectedPlaylist: playlist.selectedPlaylist,
+        listOfPlaylistFromAPI: playlistResponse.data.playlists.items
+      })
+    });
+    console.log(val)
+  }
 
   return (
-    <div>
-      <p>Most search artists</p>
-      <div className={classes.header}>
-        <h2>66+ artists for you to discover</h2>
-        <div style={{ display: 'flex'}}>
-          <p style={{ fontSize: '12px' }}>SEE MORE</p>
-          <img src={arrow} alt="arrow" style={{ cursor: 'pointer'}}/>
-        </div>
+    <form>
+      <div>
+        <Dropdown
+          label="Genre  "
+          options={genres.listOfGenresFromAPI}
+          selectedValue={genres.selectedGenre}
+          changed={genreChanged}
+        />
       </div>
-      <div style={{ display: 'flex'}}>
-        {images.map((image, index) => (
-          <img
-            key={index}
-            src={image}
-            alt="musician"
-            className={classes.image}
-            style={{width: '200px'}}
-          />
-        ))}
-      </div>
-    </div>
+    </form>
   )
 }
 
 const useStyles = makeStyles(() => ({
-  header: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-  image: {
-    objectFit: 'cover',
-    margin: '23px',
-    borderRadius: '16px',
-    width: '200px',
-    height: '200px'
-  }
+
 }))
 
 export default Gallery

@@ -9,10 +9,10 @@ const Banner = () => {
   return (
     <div className={classes.container}>
       <div className={classes.headers}>
-        <h1>Your Music Wiki</h1>
-        <p>Get to know your music</p>
+        <h1>Your Playlist</h1>
+        {/* <p>Get to know your music</p> */}
       </div>
-      <SearchInput placeholder="Search music" className={classes.input}/>
+      {/* <SearchInput placeholder="Search music" className={classes.input}/> */}
     </div>
   )
 }
