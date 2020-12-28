@@ -21,7 +21,7 @@ const MuiDropdown = (props) => {
   }
 
   return (
-    <div className={classes.container}>
+    <div>
       <label>{label}</label>
       <select value={selectedValue} onChange={dropdownChanged} className={classes.dropdown}>
         <option key={0}>Select...</option>
@@ -34,14 +34,11 @@ const MuiDropdown = (props) => {
 }
 
 const useStyles = makeStyles(() => ({
-  container: {
-    textAlign: 'center',
-    margin: '80px'
-  },
   dropdown: {
     marginLeft: '10px',
     width: '200px',
     padding: '8px 2px',
+    margin: '16px 0',
     borderRadius: '8px',
     fontFamily: 'Montserrat',
     border: 'none',
