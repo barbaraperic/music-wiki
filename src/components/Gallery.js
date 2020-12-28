@@ -54,6 +54,7 @@ const Gallery = () => {
       headers: { 'Authorization' : 'Bearer ' + token}
     })
     .then(playlistResponse => {
+      console.log('playlist', playlistResponse)
       setPlaylist({
         selectedPlaylist: playlist.selectedPlaylist,
         listOfPlaylistFromAPI: playlistResponse.data.playlists.items
@@ -61,6 +62,8 @@ const Gallery = () => {
     });
     console.log(val)
   }
+
+  console.log('>>',playlist)
 
   return (
     <form>
@@ -70,6 +73,12 @@ const Gallery = () => {
           options={genres.listOfGenresFromAPI}
           selectedValue={genres.selectedGenre}
           changed={genreChanged}
+        />
+        <Dropdown
+          label="Playlist  "
+          options={playlist.listOfPlaylistFromAPI}
+          selectedValue={playlist.selectedPlaylist}
+          changed={() => {}}
         />
       </div>
     </form>
