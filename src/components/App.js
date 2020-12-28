@@ -1,12 +1,12 @@
 import '../App.css';
 import Banner from './Banner'
-import Gallery from './Gallery'
+import Form from './Form'
 
 const App = () => {
   return (
     <div >
       <Banner />
-      <Gallery />
+      <Form />
     </div>
   );
 }
