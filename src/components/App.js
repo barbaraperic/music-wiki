@@ -1,12 +1,14 @@
 import '../App.css';
 import Banner from './Banner'
-import Form from './Form'
+import Carousel from './Carousel'
+// import Form from './Form'
 
 const App = () => {
   return (
     <div >
       <Banner />
-      <Form />
+      {/* <Form /> */}
+      <Carousel/>
     </div>
   );
 }
