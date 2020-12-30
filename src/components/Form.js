@@ -14,9 +14,6 @@ const Form = () => {
 
   const classes = useStyles()
 
-  // console.log(genres)
-  // console.log(playlist)
-
   const spotify = Credentials()
 
   useEffect(() => {
@@ -42,13 +39,11 @@ const Form = () => {
           listOfGenresFromAPI: genreResponse.data.categories.items
         })
       });
-      
     });
 
   }, [genres.selectedGenre, spotify.ClientId, spotify.ClientSecret]); 
 
   const genreChanged = val => {
-    console.log('VALLLLL',val)
     setGenres({
       selectedGenre: val,
       listOfGenresFromAPI: genres.listOfGenresFromAPI
@@ -67,15 +62,11 @@ const Form = () => {
   }
 
   const playlistChanged = val => {
-    console.log('VALLLLL 2',val)
-
     setPlaylist({
       selectedPlaylist: val,
       listOfPlaylistFromAPI: playlist.listOfPlaylistFromAPI
     })
   }
-
-  // console.log('playlist VAL', playlist)
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -94,7 +85,7 @@ const Form = () => {
     });
   }
 
-  // console.log('tracks',tracks)
+  console.log('tracks',tracks)
 
   return (
     <form onSubmit={handleSubmit}>
