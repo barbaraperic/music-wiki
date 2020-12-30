@@ -1,9 +1,16 @@
 import React from 'react'
+import { Switch, Route, Link, useParams } from "react-router-dom"
 import { makeStyles } from '@material-ui/core/styles';
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 
+import Artists from './Artists'
+
 const Gallery = ({tracks}) => {
+
+  const params = useParams()
+  
+  console.log('params', params)
 
   const classes = useStyles()
 
@@ -27,26 +34,32 @@ const Gallery = ({tracks}) => {
     }
   };
 
+  tracks.listOfTracksFromAPI.map(track => console.log(track.track.id))
+
   return (
-    <Carousel responsive={responsive} className={classes.container}>
-      {tracks.listOfTracksFromAPI.map((tracks, index) => (
-        <div className={classes.item} key={index}>
-          <a 
-            href={tracks.track.external_urls.spotify} 
-            style={{ textDecoration: 'none'}}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <img 
-              src={tracks.track.album.images[0].url} 
-              alt="album_image"
-              className={classes.image}
-            />
-            <p key={index} className={classes.listItem}>{tracks.track.name}</p>
-          </a>
-        </div>
-      ))}
-    </Carousel>
+    <React.Fragment>
+      <Carousel responsive={responsive} className={classes.container}>
+        {tracks.listOfTracksFromAPI.map((tracks, index) => (
+          <div className={classes.item} key={index}>
+            <Link 
+              to={`/artist`} 
+            >
+              <img 
+                src={tracks.track.album.images[0].url} 
+                alt="album_image"
+                className={classes.image}
+              />
+              <p key={index} className={classes.listItem}>{tracks.track.name}</p>
+            </Link>
+          </div>
+        ))}
+      </Carousel>
+      <Switch>
+        <Route to=''>
+          <Artists />
+        </Route>
+      </Switch>
+    </React.Fragment>
   )
 }
 

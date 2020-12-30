@@ -7,7 +7,7 @@ import '../App.css';
 import Banner from './Banner'
 import Form from './Form'
 import Footer from './Footer'
-import ArtistProfile from './ArtistProfile'
+import Artists from './Artists'
 
 const App = () => {
   return (
@@ -19,8 +19,8 @@ const App = () => {
               <Banner />
               <Form />
             </Route>
-            <Route path="/artist">
-              <ArtistProfile />
+            <Route path="/artists">
+              <Artists />
             </Route>
           </Switch>
         </div>

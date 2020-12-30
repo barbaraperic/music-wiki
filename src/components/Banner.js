@@ -1,6 +1,7 @@
 import React from 'react'
+import { Link } from "react-router-dom"
 import { makeStyles } from '@material-ui/core/styles';
-import SearchInput from './SearchInput'
+// import SearchInput from './SearchInput'
 import backgroundImage from '../images/background.jpg'
 
 const Banner = () => {
@@ -9,7 +10,9 @@ const Banner = () => {
   return (
     <div className={classes.container}>
       <div className={classes.headers}>
-        <h1>Your Playlist</h1>
+        <Link to="/artists">
+          <p>Artists</p>
+        </Link>
         {/* <p>Get to know your music</p> */}
       </div>
       {/* <SearchInput placeholder="Search music" className={classes.input}/> */}
