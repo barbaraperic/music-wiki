@@ -29,7 +29,7 @@ const Form = () => {
         })
       });
 
-  }, [genres.selectedGenre, token]); 
+  }, [genres.selectedGenre]); 
 
   const genreChanged = val => {
     setGenres({
@@ -55,6 +55,9 @@ const Form = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
+
+    console.log('this one',playlist.selectedPlaylist)
+    console.log('type', typeof playlist.selectedPlaylist)
 
     getTracks(playlist.selectedPlaylist, token)
       .then(tracksResponse => {

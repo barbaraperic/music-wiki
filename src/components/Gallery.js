@@ -1,5 +1,5 @@
 import React from 'react'
-import { Switch, Route, Link, useParams } from "react-router-dom"
+import { Switch, Route, Link } from "react-router-dom"
 import { makeStyles } from '@material-ui/core/styles';
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
@@ -7,10 +7,6 @@ import "react-multi-carousel/lib/styles.css";
 import Artists from './Artists'
 
 const Gallery = ({tracks}) => {
-
-  const params = useParams()
-  
-  console.log('params', params)
 
   const classes = useStyles()
 
@@ -62,8 +58,6 @@ const Gallery = ({tracks}) => {
     </React.Fragment>
   )
 }
-
-
 
 const useStyles = makeStyles(() => ({
   container: {
