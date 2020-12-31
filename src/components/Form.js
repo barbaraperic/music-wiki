@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react'
-import axios from 'axios'
 import { makeStyles } from '@material-ui/core/styles';
-import { Credentials } from './Credentials'
 import Dropdown from './Dropdown'
 import Button from './Button'
 import Gallery from './Gallery'
+
+import { getToken, getGenres, getPlaylist, getTracks } from '../helpers'
 
 const Form = () => {
   const [token, setToken] = useState('')
@@ -14,34 +14,22 @@ const Form = () => {
 
   const classes = useStyles()
 
-  const spotify = Credentials()
-
   useEffect(() => {
 
-    axios('https://accounts.spotify.com/api/token', {
-      headers: {
-        'Content-Type' : 'application/x-www-form-urlencoded',
-        'Authorization' : 'Basic ' + btoa(spotify.ClientId + ':' + spotify.ClientSecret)      
-      },
-      data: 'grant_type=client_credentials',
-      method: 'POST'
-    })
+    getToken()
     .then(tokenResponse => {      
       setToken(tokenResponse.data.access_token);
+    })
 
-      axios('https://api.spotify.com/v1/browse/categories?locale=sv_US', {
-        method: 'GET',
-        headers: { 'Authorization' : 'Bearer ' + tokenResponse.data.access_token}
-      })
+    getGenres(token)
       .then (genreResponse => {   
         setGenres({
           selectedGenre: genres.selectedGenre,
           listOfGenresFromAPI: genreResponse.data.categories.items
         })
       });
-    });
 
-  }, [genres.selectedGenre, spotify.ClientId, spotify.ClientSecret]); 
+  }, [genres.selectedGenre, token]); 
 
   const genreChanged = val => {
     setGenres({
@@ -49,10 +37,7 @@ const Form = () => {
       listOfGenresFromAPI: genres.listOfGenresFromAPI
     })
     
-    axios(`https://api.spotify.com/v1/browse/categories/${val}/playlists?limit=10`, {
-      method: 'GET',
-      headers: { 'Authorization' : 'Bearer ' + token}
-    })
+    getPlaylist(val, token)
     .then(playlistResponse => {
       setPlaylist({
         selectedPlaylist: playlist.selectedPlaylist,
@@ -71,21 +56,14 @@ const Form = () => {
   const handleSubmit = (e) => {
     e.preventDefault()
 
-    axios(`https://api.spotify.com/v1/playlists/${playlist.selectedPlaylist}/tracks?limit=10`, {
-      method: 'GET',
-      headers: {
-        'Authorization' : 'Bearer ' + token
-      }
-    })
-    .then(tracksResponse => {
-      setTracks({
-        selectedTrack: tracks.selectedTrack,
-        listOfTracksFromAPI: tracksResponse.data.items
-      })
+    getTracks(playlist.selectedPlaylist, token)
+      .then(tracksResponse => {
+        setTracks({
+          selectedTrack: tracks.selectedTrack,
+          listOfTracksFromAPI: tracksResponse.data.items
+        })
     });
   }
-
-  console.log('tracks',tracks)
 
   return (
     <form onSubmit={handleSubmit}>
