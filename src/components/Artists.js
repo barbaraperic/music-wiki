@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { makeStyles } from '@material-ui/core/styles';
 
 import {getToken, getTracks} from '../helpers'
 
@@ -35,13 +36,41 @@ const aboutArtist = listOfArtists.map(item => item.track.artists)
 
 const about = [].concat(...aboutArtist)
 
+console.log(artists)
+
+const classes = useStyles()
+
   return (
-    <div>
-      <ul>{about.map((art, index) => (
+    <div className={classes.container}>
+      <ul className={classes.list}>{about.map((art, index) => (
         <li key={index}>{art.name}</li>
       ))}</ul>
+      <div className={classes.card}>
+        <p>Artist</p>
+      </div>
     </div>
   )
 }
+
+const useStyles = makeStyles(() => ({
+  container: {
+    display: 'flex'
+  },
+  list: {
+    listStyle: 'none',
+    marginTop: '64px',
+    '& > *': {
+      padding: '8px 0',
+      '&:hover': {
+        fontWeight: '600',
+        cursor: 'pointer'
+      },
+    }
+  },
+  card: {
+    flexGrow: 2,
+    textAlign: 'center'
+  }
+}))
 
 export default Artists
