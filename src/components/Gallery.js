@@ -1,5 +1,5 @@
 import React from 'react'
-import { Switch, Route, Link } from "react-router-dom"
+import { Link } from "react-router-dom"
 import { makeStyles } from '@material-ui/core/styles';
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
@@ -37,7 +37,7 @@ const Gallery = ({tracks}) => {
       <Carousel responsive={responsive} className={classes.container}>
         {tracks.listOfTracksFromAPI.map((tracks, index) => (
           <div className={classes.item} key={index}>
-            <Link 
+            <Link
               to={`/artist`} 
             >
               <img 
@@ -50,11 +50,6 @@ const Gallery = ({tracks}) => {
           </div>
         ))}
       </Carousel>
-      <Switch>
-        <Route to=''>
-          <Artists />
-        </Route>
-      </Switch>
     </React.Fragment>
   )
 }

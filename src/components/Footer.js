@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from "react-router-dom"
 import { makeStyles } from '@material-ui/core/styles';
 
 const Footer = () => {
@@ -6,7 +7,9 @@ const Footer = () => {
   
   return (
     <div className={classes.container}>
-      <p>Your playlist</p>
+      <Link to="/" style={{ textDecoration: 'none', color: 'black' }}>
+        <p>YayList</p>
+      </Link>
       <small>Barbara Peric 2020</small>
     </div>
   )

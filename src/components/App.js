@@ -8,6 +8,7 @@ import Banner from './Banner'
 import Form from './Form'
 import Footer from './Footer'
 import Artists from './Artists'
+import ArtistPage from './ArtistPage'
 
 const App = () => {
   return (
@@ -19,8 +20,11 @@ const App = () => {
               <Banner />
               <Form />
             </Route>
-            <Route path="/artists">
+            <Route exact path="/artists">
               <Artists />
+            </Route>
+            <Route path="/artists/:id">
+              <ArtistPage />
             </Route>
           </Switch>
         </div>

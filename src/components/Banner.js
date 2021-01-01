@@ -10,8 +10,8 @@ const Banner = () => {
   return (
     <div className={classes.container}>
       <div className={classes.headers}>
-        <Link to="/artists">
-          <p>Artists</p>
+        <Link to="/artists" style={{ textDecoration: 'none' }}>
+          <p className={classes.text}>ARTISTS</p>
         </Link>
         {/* <p>Get to know your music</p> */}
       </div>
@@ -34,11 +34,16 @@ const useStyles = makeStyles(() => ({
     justifyContent: 'flex-end',
     padding:' 0 30px'
   },
-  input: {
-    float: 'right',
-    marginRight: '30px',
-    marginTop: '76px'
-  }
+  text: {
+    color: 'black',
+    fontWeight: '600',
+    letterSpacing: '1.5px',
+  },
+  // input: {
+  //   float: 'right',
+  //   marginRight: '30px',
+  //   marginTop: '76px'
+  // }
 }))
 
 export default Banner

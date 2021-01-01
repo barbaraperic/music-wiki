@@ -1,9 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import { makeStyles } from '@material-ui/core/styles';
+import { Switch, Route, Link, useRouteMatch } from "react-router-dom"
 
-import {getToken, getTracks} from '../helpers'
+import ArtistPage from './ArtistPage'
+import { getToken, getTracks } from '../helpers'
 
 const Artists = () => {
+
+  const { url } = useRouteMatch()
+  console.log(url)
 
   const [ token, setToken ] = useState('')
   const [ artists, setArtists ] = useState({ list: []})
@@ -36,18 +41,30 @@ const aboutArtist = listOfArtists.map(item => item.track.artists)
 
 const about = [].concat(...aboutArtist)
 
-console.log(artists)
-
 const classes = useStyles()
 
   return (
     <div className={classes.container}>
       <ul className={classes.list}>{about.map((art, index) => (
-        <li key={index}>{art.name}</li>
-      ))}</ul>
+        <Link
+        key={index}
+        className={classes.link}
+        to={{
+          pathname: `${url}/${(art.id)}`,
+        }}
+        >
+          <li key={index}>{art.name}</li>
+        </Link>
+      ))}
+      </ul>
       <div className={classes.card}>
-        <p>Artist</p>
+        <h2>Artist</h2>
       </div>
+      <Switch>
+        <Route path={`${url}/:id`}>
+          <ArtistPage />
+        </Route>
+      </Switch>
     </div>
   )
 }
@@ -56,9 +73,9 @@ const useStyles = makeStyles(() => ({
   container: {
     display: 'flex'
   },
-  list: {
-    listStyle: 'none',
-    marginTop: '64px',
+  link: {
+    textDecoration: 'none', 
+    color: 'black',
     '& > *': {
       padding: '8px 0',
       '&:hover': {
@@ -66,6 +83,10 @@ const useStyles = makeStyles(() => ({
         cursor: 'pointer'
       },
     }
+  },
+  list: {
+    listStyle: 'none',
+    marginTop: '64px',
   },
   card: {
     flexGrow: 2,
