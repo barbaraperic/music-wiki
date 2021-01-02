@@ -37,11 +37,13 @@ const Artists = () => {
 
 
 const listOfArtists = artists.list.map((artist) => artist)
-const aboutArtist = listOfArtists.map(item => item.track.artists)
+const aboutArtist = listOfArtists.map(item => item.track)
 
 const about = [].concat(...aboutArtist)
 
 const classes = useStyles()
+
+console.log('>>>>>', about)
 
   return (
     <div className={classes.container}>
@@ -50,10 +52,13 @@ const classes = useStyles()
         key={index}
         className={classes.link}
         to={{
-          pathname: `${url}/${(art.id)}`,
+          pathname: `${url}/${(art.artists[0].id)}`,
+          state: {
+            profile: art
+          }
         }}
         >
-          <li key={index}>{art.name}</li>
+          <li key={index}>{art.artists[0].name}</li>
         </Link>
       ))}
       </ul>

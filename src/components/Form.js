@@ -29,7 +29,7 @@ const Form = () => {
         })
       });
 
-  }, [genres.selectedGenre]); 
+  }, [genres.selectedGenre]);
 
   const genreChanged = val => {
     setGenres({
