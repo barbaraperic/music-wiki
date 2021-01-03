@@ -8,7 +8,6 @@ import { getToken, getTracks } from '../helpers'
 const Artists = () => {
 
   const { url } = useRouteMatch()
-  console.log(url)
 
   const [ token, setToken ] = useState('')
   const [ artists, setArtists ] = useState({ list: []})
@@ -43,8 +42,6 @@ const about = [].concat(...aboutArtist)
 
 const classes = useStyles()
 
-console.log('>>>>>', about)
-
   return (
     <div className={classes.container}>
       <ul className={classes.list}>{about.map((art, index) => (
@@ -63,7 +60,7 @@ console.log('>>>>>', about)
       ))}
       </ul>
       <div className={classes.card}>
-        <h2>Artist</h2>
+        <h2 style={{ letterSpacing: '1.5px' }}>Artists</h2>
       </div>
       <Switch>
         <Route path={`${url}/:id`}>

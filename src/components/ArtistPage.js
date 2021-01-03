@@ -1,13 +1,15 @@
 import React from 'react';
-import { Link, useParams, useLocation } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
+import Loading from './Loading'
 
-const ArtistPage = (props) => {
+const ArtistPage = () => {
 
   let location = useLocation();
-  const { id } = useParams()
   const { profile } = location.state
 
-  console.log('>>', location.state)
+  if(!profile) {
+    return <Loading />
+  }
   
   return (
     <div>
@@ -15,10 +17,7 @@ const ArtistPage = (props) => {
         <p>BACK</p>
       </Link>
       <div>
-        <div style={{ display: 'flex', justifyContent: 'space-around'}}>
-          <p>{profile.artists[0].name}</p>
-          <p>{profile.album.name}</p>
-        </div>
+        <p>{profile.artists[0].name} - {profile.album.name}</p>
         <a 
           href={profile.album.external_urls.spotify} 
           target="_blank"

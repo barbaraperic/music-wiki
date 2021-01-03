@@ -10,6 +10,12 @@ import Footer from './Footer'
 import Artists from './Artists'
 import ArtistPage from './ArtistPage'
 
+// todo: track route and page
+// todo: dark mode
+// todo: responsiveness
+// todo: styling
+// todo: netlify
+
 const App = () => {
   return (
     <Router>

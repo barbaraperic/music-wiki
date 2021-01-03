@@ -56,9 +56,6 @@ const Form = () => {
   const handleSubmit = (e) => {
     e.preventDefault()
 
-    console.log('this one',playlist.selectedPlaylist)
-    console.log('type', typeof playlist.selectedPlaylist)
-
     getTracks(playlist.selectedPlaylist, token)
       .then(tracksResponse => {
         setTracks({
@@ -67,6 +64,8 @@ const Form = () => {
         })
     });
   }
+
+  console.log('tracks', tracks)
 
   return (
     <form onSubmit={handleSubmit}>

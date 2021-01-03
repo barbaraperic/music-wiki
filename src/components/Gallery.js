@@ -4,7 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 
-import Artists from './Artists'
+import Loading from './Loading'
 
 const Gallery = ({tracks}) => {
 
@@ -30,7 +30,9 @@ const Gallery = ({tracks}) => {
     }
   };
 
-  tracks.listOfTracksFromAPI.map(track => console.log(track.track.id))
+  if(!tracks) {
+    return <Loading />
+  }
 
   return (
     <React.Fragment>
