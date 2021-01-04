@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 import {
   BrowserRouter as Router,
   Switch,
@@ -9,6 +10,7 @@ import Form from './Form'
 import Footer from './Footer'
 import Artists from './Artists'
 import ArtistPage from './ArtistPage'
+import { ThemeProvider } from '../contexs/theme'
 
 // todo: track route and page
 // todo: dark mode
@@ -17,25 +19,38 @@ import ArtistPage from './ArtistPage'
 // todo: netlify
 
 const App = () => {
+  
+  const [theme, setTheme] = useState('light')
+
+  const toggleTheme = () => {
+    setTheme(prevState => ({
+      theme: prevState === 'light' ? 'dark' : 'light'
+    }))
+  }
+
   return (
     <Router>
-      <div id="main-container">
-        <div id="site-content">
-          <Switch>
-            <Route exact path="/">
-              <Banner />
-              <Form />
-            </Route>
-            <Route exact path="/artists">
-              <Artists />
-            </Route>
-            <Route path="/artists/:id">
-              <ArtistPage />
-            </Route>
-          </Switch>
+      <ThemeProvider value={{ theme, toggleTheme }} >
+        <div className={theme}>
+          <div id="main-container">
+            <div id="site-content">
+              <Switch>
+                <Route exact path="/">
+                  <Banner />
+                  <Form />
+                </Route>
+                <Route exact path="/artists">
+                  <Artists />
+                </Route>
+                <Route path="/artists/:id">
+                  <ArtistPage />
+                </Route>
+              </Switch>
+            </div>
+            <Footer />
+          </div>
         </div>
-        <Footer />
-      </div>
+      </ThemeProvider>
     </Router>
   );
 }

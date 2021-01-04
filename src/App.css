@@ -5,6 +5,12 @@
   flex-direction: column;
 }
 
+.dark {
+  color: #DADADA;
+  background: #1c2022;
+  min-height: 100%;
+}
+
 #main-container {
   display: flex;
   flex-direction: column;

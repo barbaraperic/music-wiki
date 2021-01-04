@@ -4,6 +4,7 @@ import { Switch, Route, Link, useRouteMatch } from "react-router-dom"
 
 import ArtistPage from './ArtistPage'
 import { getToken, getTracks } from '../helpers'
+import { ThemeConsumer } from '../contexs/theme'
 
 const Artists = () => {
 
@@ -43,37 +44,45 @@ const about = [].concat(...aboutArtist)
 const classes = useStyles()
 
   return (
-    <div className={classes.container}>
-      <ul className={classes.list}>{about.map((art, index) => (
-        <Link
-        key={index}
-        className={classes.link}
-        to={{
-          pathname: `${url}/${(art.artists[0].id)}`,
-          state: {
-            profile: art
-          }
-        }}
-        >
-          <li key={index}>{art.artists[0].name}</li>
-        </Link>
-      ))}
-      </ul>
-      <div className={classes.card}>
-        <h2 style={{ letterSpacing: '1.5px' }}>Artists</h2>
-      </div>
-      <Switch>
-        <Route path={`${url}/:id`}>
-          <ArtistPage />
-        </Route>
-      </Switch>
-    </div>
+    <ThemeConsumer>
+      {( {theme} ) => (
+        <div className={classes.container}>
+          <ul className={classes.list}>{about.map((art, index) => (
+            <Link
+            key={index}
+            className={classes.link}
+            to={{
+              pathname: `${url}/${(art.artists[0].id)}`,
+              state: {
+                profile: art
+              }
+            }}
+            >
+              <li key={index}>{art.artists[0].name}</li>
+            </Link>
+          ))}
+          </ul>
+          <div className={classes.card}>
+            <h2 style={{ letterSpacing: '1.5px' }}>Artists</h2>
+          </div>
+          <Switch>
+            <Route path={`${url}/:id`}>
+              <ArtistPage />
+            </Route>
+          </Switch>
+        </div>
+      )}
+    </ThemeConsumer>
   )
 }
 
 const useStyles = makeStyles(() => ({
   container: {
     display: 'flex'
+  },
+  containerDark: {
+    display: 'flex',
+    backgroundColor: 'black'
   },
   link: {
     textDecoration: 'none', 
